@@ -3,7 +3,6 @@ defmodule KVServerTest do
   doctest KVServer
   @moduletag :capture_log
 
-
   setup do
     Application.stop(:kv)
     :ok = Application.start(:kv)
