@@ -5,8 +5,10 @@ defmodule KV.Router do
   """
 
   def route(bucket, mod, fun, args) do
+    # Get the first byte of the binary
     first = :binary.first(bucket)
 
+    # Try to find an entry in the table or raise
     entry =
       Enum.find(
         table(),
@@ -15,6 +17,7 @@ defmodule KV.Router do
         end
       ) || no_entry_error(bucket)
 
+    # IF the entry node is the current node
     if elem(entry, 1) == node() do
       apply(mod, fun, args)
     else
@@ -28,7 +31,10 @@ defmodule KV.Router do
     raise "Could not find entry for #{inspect(bucket)} in table #{inspect(table())}"
   end
 
+  @doc """
+  The routing table
+  """
   def table do
-    [{?a..?m, :foo@zrhn2742}, {?n..?z, :bar@zrhn2742}]
+    Application.fetch_env!(:kv, :routing_table)
   end
 end

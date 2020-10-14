@@ -67,7 +67,7 @@ defmodule KVServer.Command do
     lookup(
       bucket,
       fn pid ->
-        value = KV.Bucket.put(pid, key, value)
+        _value = KV.Bucket.put(pid, key, value)
         {:ok, "OK\r\n"}
       end
     )
@@ -77,7 +77,7 @@ defmodule KVServer.Command do
     lookup(
       bucket,
       fn pid ->
-        value = KV.Bucket.delete(pid, key)
+        _value = KV.Bucket.delete(pid, key)
         {:ok, "OK\r\n"}
       end
     )
